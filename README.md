@@ -6,7 +6,7 @@ I found the parameterisation of the classic form at:
 
 https://mathcurve.com/surfaces.gb/klein/klein.shtml
 
-The given parameterisation consusts of two parts, for the top and bottom part of the bottle.
+The given parameterisation consists of two parts, for the top and bottom part of the bottle.
 
 Due to an issue with OpenSCAD v2021.01, both halves cannot be rendered at the same time, but must be rendered individually.
 
