@@ -6,8 +6,4 @@ I found the parameterisation of the classic form at:
 
 https://mathcurve.com/surfaces.gb/klein/klein.shtml
 
-The given parameterisation consists of two parts, for the top and bottom part of the bottle.
-
-Due to an issue with OpenSCAD v2021.01, both halves cannot be rendered at the same time, but must be rendered individually.
-
-I used Meshmixer to put the two halves of the bottle together.
+I tried to punch a hole into the surface as well, so the bootle can be filled with a liquid, but this attempt has failed so far...
