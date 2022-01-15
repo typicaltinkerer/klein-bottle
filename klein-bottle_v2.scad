@@ -14,7 +14,7 @@ c = 8; // weight
 w = 0.7; // wall
 
 du = 5;
-dv = 5;
+dv = 20;
 
 alpha = 1;
 
@@ -53,15 +53,9 @@ un1 = 180;
 vn1 = 360;
 dom1 = domain(0, du, un1, 0, dv, vn1);
 
-inner_surface1 = [for(row=dom1) [for(uv=row) let(u=uv[0], v=uv[1]) klein1(u, v) - (w/2)*nklein1(u, v)]];    
-outer_surface1 = [for(row=dom1) [for(uv=row) let(u=uv[0], v=uv[1]) klein1(u, v) + (w/2)*nklein1(u, v)]];
+inner_range1 = [for(row=dom1) [for(uv=row) let(u=uv[0], v=uv[1]) klein1(u, v) - (w/2)*nklein1(u, v)]];    
+outer_range1 = [for(row=dom1) [for(uv=row) let(u=uv[0], v=uv[1]) klein1(u, v) + (w/2)*nklein1(u, v)]];
     
-start_surface1 = [first_row(inner_surface1), first_row(outer_surface1)];
-end_surface1 = [last_row(inner_surface1), last_row(outer_surface1)];
-
-surfaces1 = [reorder(inner_surface1), outer_surface1, start_surface1, reorder(end_surface1)];
-color("yellow", alpha) solid(surfaces1);
-
 // second part
 function klein2(u, v) = let(ru=r(u)) [
     a*(1 + sin(u))*cos(u) + ru*cos(v),
@@ -90,17 +84,23 @@ function nklein2(u, v) = normal(dklein2_du(u, v), dklein2_dv(u, v));
 un2 = 270;
 dom2 = domain(un1, du, un2, 0, dv, vn1);
 
-inner_surface2 = [for(row=dom2) [for(uv=row) let(u=uv[0], v=uv[1]) klein2(u, v) + (w/2)*nklein2(u, v)]];    
-outer_surface2 = [for(row=dom2) [for(uv=row) let(u=uv[0], v=uv[1]) klein2(u, v) - (w/2)*nklein2(u, v)]];
+inner_range2 = [for(row=dom2) [for(uv=row) let(u=uv[0], v=uv[1]) klein2(u, v) + (w/2)*nklein2(u, v)]];    
+outer_range2 = [for(row=dom2) [for(uv=row) let(u=uv[0], v=uv[1]) klein2(u, v) - (w/2)*nklein2(u, v)]];
 
 un3 = 360;
 dom3 = domain(un2, du, un3, 0, dv, vn1);
 
-inner_surface3 = [for(row=dom3) [for(uv=row) let(u=uv[0], v=uv[1]) klein2(u, v) - (w/2)*nklein2(u, v)]];    
-outer_surface3 = [for(row=dom3) [for(uv=row) let(u=uv[0], v=uv[1]) klein2(u, v) + (w/2)*nklein2(u, v)]];
-   
-start_surface2 = [first_row(inner_surface2), first_row(outer_surface2)];
-end_surface2 = [last_row(inner_surface3), last_row(outer_surface3)];
+inner_range3 = [for(row=dom3) [for(uv=row) let(u=uv[0], v=uv[1]) klein2(u, v) - (w/2)*nklein2(u, v)]];    
+outer_range3 = [for(row=dom3) [for(uv=row) let(u=uv[0], v=uv[1]) klein2(u, v) + (w/2)*nklein2(u, v)]];
 
-surfaces2 = [inner_surface2, reorder(outer_surface2), reorder(inner_surface3), outer_surface3, reorder(start_surface2), reorder(end_surface2)];
-color("yellow", alpha) solid(surfaces2);
+surface = gen_surface([reorder_rows(inner_range1), outer_range1, inner_range2, reorder_rows(outer_range2), reorder_rows(inner_range3), outer_range3]);
+module bottle() solid([surface]);
+color("yellow", alpha) bottle();
+
+// attempt to create a hole, but doesn't work as expected...
+plug_outer_surface = gen_surface([inner_range3]);
+plug_end_surface_1 = minimal_surface(reorder_row(first_row(inner_range3)));
+plug_end_surface_2 = minimal_surface(last_row(inner_range3));
+module plug() solid([plug_outer_surface, plug_end_surface_1, plug_end_surface_2]);
+//color("yellow", alpha) plug();
+//color("yellow", alpha) difference() { bottle(); plug(); }
