@@ -6,6 +6,8 @@
 include <klein-bottle-functions.scad>;
 include <solid.scad>;
 
+w = 0.7; // wall
+
 du = 20;
 dv = 20;
 

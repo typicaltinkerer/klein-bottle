@@ -9,7 +9,6 @@
 a = 8; // width
 b = 30; // height
 c = 8; // weight
-w = 0.7; // wall
 
 function unit_normal(v) = v / norm(v);
 function normal(a, b) = let(c = cross(a, b)) unit_normal(c);
