@@ -28,7 +28,7 @@ dom3 = domain(un2, du, un3, 0, dv, vn1);
 inner_range3 = [for(row=dom3) [for(uv=row) let(u=uv[0], v=uv[1]) klein2(u, v) - (w/2)*nklein2(u, v)]];    
 outer_range3 = [for(row=dom3) [for(uv=row) let(u=uv[0], v=uv[1]) klein2(u, v) + (w/2)*nklein2(u, v)]];
 
-range_1_3 = concat(inner_range3, inner_range1, flip_ud(outer_range1), flip_ud(outer_range3));
+range_1_3 = concat(flip_lr(inner_range3), flip_lr(inner_range1), flip_ud(flip_lr(outer_range1)), flip_ud(flip_lr(outer_range3)));
 surface_1_3 = gen_surface(range_1_3, true);
 module bottle_1_3() solid(surface_1_3);
 
@@ -42,5 +42,7 @@ inner_range4 = [for(row=dom4) [for(uv=row) let(u=uv[0], v=uv[1]) klein2(u, v) - 
 plug_surface = gen_capped_surface(inner_range4);
 module hole() solid(plug_surface);
 
+// the bottle consists of the following two parts, which look fine in the preview, but cannot be 
+// rendered at the same time.
 bottle_1_3();
 difference() { bottle_2(); hole();}
