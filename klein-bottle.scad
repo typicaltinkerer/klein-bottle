@@ -3,13 +3,13 @@
  * Dual licenced under Creative Commons Attribution-Share Alike 3.0 and LGPL2 or later
  */
  
-include <klein-bottle-functions.scad>;
-include <solid.scad>;
+use <klein-bottle-functions.scad>;
+use <solid.scad>;
 
 w = 0.7; // wall
 
-du = 20;
-dv = 20;
+du = 10;
+dv = 10;
 
 un1 = 180;
 vn1 = 360;
