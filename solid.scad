@@ -5,15 +5,15 @@
 
 function flatten(as) = [for(a = as) each a];
 
-function gen_v_loop_squares(range, offset) = let(nr = len(range), nc = len(range[0])) [for(col = [0:nc-1]) [col,(nr-1)*nc+col,(nr-1)*nc+(col+1)%nc,(col+1)%nc]];
+function gen_v_loop_squares(range) = let(nr = len(range), nc = len(range[0])) [for(col = [0:nc-1]) [col,(nr-1)*nc+col,(nr-1)*nc+(col+1)%nc,(col+1)%nc]];
 
-function gen_surf_squares(range, offset) = let(nr = len(range), nc = len(range[0])) [for(row = [0:nr-2], col = [0:nc-1]) let(i=offset + row*nc) [i+col, i+(col+1)%nc, i+nc+(col+1)%nc, i+nc+col]];
+function gen_surf_squares(range) = let(nr = len(range), nc = len(range[0])) [for(row = [0:nr-2], col = [0:nc-1]) let(i=row*nc) [i+col, i+(col+1)%nc, i+nc+(col+1)%nc, i+nc+col]];
 
-function gen_squares(range, offset, closed) = closed ? 
-    flatten([gen_surf_squares(range, offset), gen_v_loop_squares(range, offset)]) : 
-    flatten([gen_surf_squares(range, offset)]);
+function gen_squares(range, closed) = closed ? 
+    flatten([gen_surf_squares(range), gen_v_loop_squares(range)]) : 
+    flatten([gen_surf_squares(range)]);
 
-function gen_surface(range, closed = false) = [[for(row=range) each row], gen_squares(range, 0, closed)];
+function gen_surface(range, closed = false) = [[for(row=range) each row], gen_squares(range, closed)];
 
 function flip_lr_row(row) = [for(i=[len(row)-1:-1:0]) row[i]];
 function flip_lr(surface) = [for(row = surface) flip_lr_row(row)];
