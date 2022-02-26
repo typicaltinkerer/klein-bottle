@@ -44,7 +44,7 @@ module bottom_plug(w, a, b, c, du, dv, start, end) {
 }
     
 w = 0.42; // wall
-a = 10; // width
+a = 11; // width
 b = 50; // height
 c = 10; // weight
 du = 5;
