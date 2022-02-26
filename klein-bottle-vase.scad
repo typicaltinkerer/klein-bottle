@@ -8,7 +8,7 @@ use <klein-bottle-with-hole.scad>
 use <solid.scad>;
 
 w = 0.42; // wall
-a = 10; // width
+a = 10.5; // width
 b = 50; // height
 c = 10; // weight
 du = 5;
